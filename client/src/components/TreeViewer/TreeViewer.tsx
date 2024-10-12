@@ -40,8 +40,8 @@ const TreeViewer = () => {
   const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>(SampleData);
   const handleDrop = (newTree: NodeModel<CustomData>[]) => setTreeData(newTree);
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedNode, setSelectedNode] = useState(null);
-  const handleSelect = (node) => setSelectedNode(node);
+  const [selectedNode, setSelectedNode] = useState<NodeModel>(null);
+  const handleSelect = (node: NodeModel) => setSelectedNode(node);
 
 
   const handleDelete = (id: NodeModel["id"]) => {
@@ -96,11 +96,28 @@ const TreeViewer = () => {
     setOpen(false);
   };
 
+
+  const handleTextChange = (id: NodeModel["id"], value: string) => {
+    const newTree = treeData.map((node) => {
+      if (node.id === id) {
+        return {
+          ...node,
+          text: value
+        };
+      }
+
+      return node;
+    });
+
+    setTreeData(newTree);
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-        <div className={styles.app}>
+        <div className={styles.app + " border-gray-300 border p-5 rounded-md"}>
         <div className={styles.current}>
             <p>
               Current node:{" "}
@@ -132,6 +149,7 @@ const TreeViewer = () => {
                 isSelected={node.id === selectedNode?.id}
                 onSelect={handleSelect}
                 onCopy={handleCopy}
+                onTextChange={handleTextChange}
               />
             )}
             dragPreviewRender={(

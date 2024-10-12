@@ -20,6 +20,11 @@ export const theme = createTheme({
       styleOverrides: {
         root: { verticalAlign: "middle" }
       }
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: { color: "inherit" }
+      }
     }
   }
 });

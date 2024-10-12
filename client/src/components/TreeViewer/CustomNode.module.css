@@ -1,13 +1,9 @@
 .root {
   align-items: center;
-  display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  display: flex;
   height: 32px;
-  padding-inline-end: 8px;
-}
-
-.root.isSelected {
-  color: #1967d2;
+  padding-inline-end: 12px;
+  width: 300px;
 }
 
 .expandIconWrapper {
@@ -28,4 +24,42 @@
 
 .labelGridItem {
   padding-inline-start: 8px;
+}
+
+.actionButton {
+  padding: 0 4px;
+}
+
+
+.inputWrapper {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: flex-start;
+}
+
+.textField input {
+  font-size: 14px;
+  padding: 6px 5px;
+}
+
+.editButton {
+  padding: 6px;
+}
+
+.editIcon {
+  font-size: 20px;
+}
+
+.nodeInput {
+  width: 200px;
+}
+
+.nodeLabel {
+  padding-right: 15px;
+}
+
+
+.root.isSelected {
+  color: #1967d2;
 }
