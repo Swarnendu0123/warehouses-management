@@ -1,17 +1,5 @@
 import { atom } from 'recoil';
 
-export const newQuestionsState = atom({
-    key: 'newQuestionsState',
-    default: [],
-});
-
-export const questionState = atom(
-    {
-        key: "questionState",
-        default: ""
-    }
-)
-
 export const userState = atom(
     {
         key: "userState",
@@ -19,19 +7,11 @@ export const userState = atom(
     }
 )
 
-export const ToastState = atom(
+
+export const currentFileState = atom(
     {
-        key: "ToastState",
-        default: {
-            title: "",
-            message: "",
-        }
+        key: "currentFileState",
+        default: null
     }
 )
 
-export const ToastToggleState = atom(
-    {
-        key: "ToastToggleState",
-        default: false
-    }
-)

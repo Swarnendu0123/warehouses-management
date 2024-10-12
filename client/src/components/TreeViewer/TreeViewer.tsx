@@ -8,7 +8,7 @@ import {
   MultiBackend,
   DragLayerMonitorProps,
   getDescendants,
-  getBackendOptions
+  getBackendOptions,
 } from "@minoru/react-dnd-treeview";
 import { NodeModel, CustomData } from "./types";
 import { CustomNode } from "./CustomNode";
@@ -17,6 +17,8 @@ import { AddDialog } from "./AddDialog";
 import { theme } from "./theme";
 import styles from "./AddDialog.module.css";
 import SampleData from "./sample_data.json";
+import { useRecoilState } from "recoil";
+import { currentFileState } from "../../store/atoms";
 
 const getLastId = (treeData: NodeModel[]) => {
   const reversedArray = [...treeData].sort((a, b) => {
@@ -40,14 +42,14 @@ const TreeViewer = () => {
   const [treeData, setTreeData] = useState<NodeModel<CustomData>[]>(SampleData);
   const handleDrop = (newTree: NodeModel<CustomData>[]) => setTreeData(newTree);
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedNode, setSelectedNode] = useState<NodeModel>(null);
+  // @ts-ignore
+  const [selectedNode, setSelectedNode] = useRecoilState<NodeModel>(currentFileState);
   const handleSelect = (node: NodeModel) => setSelectedNode(node);
-
 
   const handleDelete = (id: NodeModel["id"]) => {
     const deleteIds = [
       id,
-      ...getDescendants(treeData, id).map((node) => node.id)
+      ...getDescendants(treeData, id).map((node) => node.id),
     ];
     const newTree = treeData.filter((node) => !deleteIds.includes(node.id));
 
@@ -58,19 +60,22 @@ const TreeViewer = () => {
     const lastId = getLastId(treeData);
     const targetNode = treeData.find((n) => n.id === id);
     const descendants = getDescendants(treeData, id);
+    // @ts-ignore
     const partialTree = descendants.map((node: NodeModel<CustomData>) => ({
       ...node,
       id: node.id + lastId,
-      parent: node.parent + lastId
+      parent: node.parent + lastId,
     }));
 
+    // @ts-ignore
     setTreeData([
       ...treeData,
       {
         ...targetNode,
-        id: targetNode.id + lastId
+        // @ts-ignore
+        id: targetNode.id + lastId,
       },
-      ...partialTree
+      ...partialTree,
     ]);
   };
 
@@ -89,20 +94,19 @@ const TreeViewer = () => {
       ...treeData,
       {
         ...newNode,
-        id: lastId
-      }
+        id: lastId,
+      },
     ]);
 
     setOpen(false);
   };
-
 
   const handleTextChange = (id: NodeModel["id"], value: string) => {
     const newTree = treeData.map((node) => {
       if (node.id === id) {
         return {
           ...node,
-          text: value
+          text: value,
         };
       }
 
@@ -112,14 +116,13 @@ const TreeViewer = () => {
     setTreeData(newTree);
   };
 
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <div className={styles.app + " border-gray-300 border p-5 rounded-md"}>
-        <div className={styles.current}>
-            <p>
+          <div className={styles.current}>
+            <p className="font-bold">
               Current node:{" "}
               <span className={styles.currentLabel}>
                 {selectedNode ? selectedNode.text : "none"}
@@ -134,6 +137,7 @@ const TreeViewer = () => {
               <AddDialog
                 tree={treeData}
                 onClose={handleCloseDialog}
+                // @ts-ignore
                 onSubmit={handleSubmit}
               />
             )}
@@ -141,6 +145,7 @@ const TreeViewer = () => {
           <Tree
             tree={treeData}
             rootId={0}
+            // @ts-ignore
             render={(node: NodeModel<CustomData>, options) => (
               <CustomNode
                 node={node}
@@ -155,17 +160,18 @@ const TreeViewer = () => {
             dragPreviewRender={(
               monitorProps: DragLayerMonitorProps<CustomData>
             ) => <CustomDragPreview monitorProps={monitorProps} />}
+            // @ts-ignore
             onDrop={handleDrop}
             classes={{
               root: styles.treeRoot,
               draggingSource: styles.draggingSource,
-              dropTarget: styles.dropTarget
+              dropTarget: styles.dropTarget,
             }}
           />
         </div>
       </DndProvider>
     </ThemeProvider>
   );
-}
+};
 
 export default TreeViewer;

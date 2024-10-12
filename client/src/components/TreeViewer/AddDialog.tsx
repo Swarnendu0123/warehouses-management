@@ -54,6 +54,7 @@ export const AddDialog: React.FC<Props> = (props) => {
         <div>
           <FormControl className={styles.select}>
             <InputLabel>Parent</InputLabel>
+            {/* @ts-ignore */}
             <Select label="Parent" onChange={handleChangeParent} value={parent}>
               <MenuItem value={0}>(root)</MenuItem>
               {props.tree
@@ -84,6 +85,7 @@ export const AddDialog: React.FC<Props> = (props) => {
               <InputLabel>File type</InputLabel>
               <Select
                 label="FileType"
+                // @ts-ignore
                 onChange={handleChangeFileType}
                 value={fileType}
               >

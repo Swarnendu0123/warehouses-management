@@ -38,6 +38,7 @@ export const CustomNode: React.FC<Props> = (props) => {
     props.onToggle(props.node.id);
   };
 
+  // @ts-ignore
   const dragOverProps = useDragOver(id, props.isOpen, props.onToggle);
 
   const handleSelect = () => props.onSelect(props.node);
@@ -51,7 +52,7 @@ export const CustomNode: React.FC<Props> = (props) => {
     setVisibleInput(false);
   };
 
-  const handleChangeText = (e) => {
+  const handleChangeText = (e: any) => {
     setLabelText(e.target.value);
   };
 
@@ -83,6 +84,7 @@ export const CustomNode: React.FC<Props> = (props) => {
         )}
       </div>
       <div>
+        {/* @ts-ignore */}
         <TypeIcon droppable={droppable} fileType={data?.fileType} />
       </div>
       {!visibleInput && (
