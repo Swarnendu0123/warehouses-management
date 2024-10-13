@@ -6,6 +6,7 @@ import InfoViewer from "../components/InfoViewer/InfoViewer";
 
 
 const Dashboard = () => {
+    // @ts-ignore
     const user = useRecoilValue<User | null>(userState as unknown as RecoilState<User | null>);
     return (
         <div>
