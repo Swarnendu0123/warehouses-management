@@ -5,6 +5,7 @@ import { TypeIcon } from "../TreeViewer/TypeIcon";
 import { CustomData, NodeModel } from "../TreeViewer/types";
 
 const InfoViewer = () => {
+  // @ts-ignore
   const currentFile = useRecoilValue<NodeModel<CustomData>>(currentFileState);
   console.log(currentFile);
 

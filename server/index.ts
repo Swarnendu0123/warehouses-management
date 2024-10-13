@@ -62,13 +62,13 @@ app.get("/items/:id", async (req: Request, res: Response) => {
 
 // create a new note
 app.post("/items", async (req: Request, res: Response) => {
-  const { name, parent_godown, createdBy } = req.body;
+  const { text, parent, createdBy } = req.body;
 
   try {
     const item = new itemModel({
       id: uuidv4(),
-      name,
-      parent_godown,
+      text,
+      parent,
       createdBy,
     });
 
@@ -86,7 +86,7 @@ app.post("/items", async (req: Request, res: Response) => {
 // update a note
 app.put("/items/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, parent_godown } = req.body;
+  const { text, parent_godown } = req.body;
 
   try {
     const item = await itemModel.findOne({
@@ -98,7 +98,7 @@ app.put("/items/:id", async (req: Request, res: Response) => {
       return;
     }
 
-    item.name = name;
+    item.text = text;
     item.parent_godown = parent_godown;
 
     await item.save();
