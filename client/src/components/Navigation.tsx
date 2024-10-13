@@ -37,7 +37,7 @@ const Navigation = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
+        result.user;
       })
 
       .catch((error) => {
