@@ -11,7 +11,7 @@ const InfoViewer = () => {
 
   if (currentFile) {
     return (
-      <div className="border-gray-300 border p-5 rounded-md mx-5 w-96 flex">
+      <div className="border-gray-300 border p-5 rounded-md mx-5 w-[600px] flex">
         <div className="">
           <div className="mx-3">
             <TypeIcon
